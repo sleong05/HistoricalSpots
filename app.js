@@ -22,7 +22,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo');
 const dbUrl = process.env.DB_URL;
 // const dbUrl = 'mongodb://localhost:27017/yelpCamp'
-mongoose.connect(dbUrl,{
+mongoose.connect(dbUrl, {
     tls: true,
     serverSelectionTimeoutMS: 5000,
     socketTimeoutMS: 45000,
@@ -52,6 +52,8 @@ const styleSrcUrls = [
 ];
 const connectSrcUrls = [
     "https://api.maptiler.com/",
+    "https://cdn.maptiler.com/",
+    "https://cdn.jsdelivr.net",
 ];
 const fontSrcUrls = [];
 
@@ -84,6 +86,7 @@ app.use(
                 "https://res.cloudinary.com/dqsojznwk/",
                 "https://images.unsplash.com/",
                 "https://api.maptiler.com/",
+                "https://cdn.maptiler.com/",
                 "https://www.nps.gov/",
                 "https://*.nps.gov/",
             ],
@@ -97,9 +100,6 @@ const store = MongoStore.create({
     touchAfter: 24 * 60 * 60,
     crypto: {
         secret: process.env.SECRET,
-    },
-    mongoOptions: {
-        tls: true,
     }
 });
 
