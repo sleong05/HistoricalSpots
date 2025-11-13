@@ -22,7 +22,11 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo');
 const dbUrl = process.env.DB_URL;
 // const dbUrl = 'mongodb://localhost:27017/yelpCamp'
-mongoose.connect(dbUrl)
+mongoose.connect(dbUrl,{
+    tls: true,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+})
     .then(() => { console.log("connected"); })
     .catch(err => {
         console.log("Error connecting to database");
@@ -93,6 +97,9 @@ const store = MongoStore.create({
     touchAfter: 24 * 60 * 60,
     crypto: {
         secret: process.env.SECRET,
+    },
+    mongoOptions: {
+        tls: true,
     }
 });
 
